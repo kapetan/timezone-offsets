@@ -1,0 +1,30 @@
+{
+  "name": "timezone-offsets",
+  "version": "0.0.0",
+  "description": "Timezone list with adjusted time offset",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard --verbose && tape test/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kapetan/timezone-offsets.git"
+  },
+  "keywords": [
+    "timezone",
+    "time",
+    "offset",
+    "tz"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kapetan/timezone-offsets/issues"
+  },
+  "homepage": "https://github.com/kapetan/timezone-offsets#readme",
+  "devDependencies": {
+    "csv-parse": "^2.2.0",
+    "standard": "^11.0.1",
+    "tape": "^4.9.0"
+  }
+}
