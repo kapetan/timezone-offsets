@@ -4,6 +4,7 @@ var tz = require('../')
 
 test('has zones', function (t) {
   var zones = tz()
+  var previous = null
 
   t.ok(zones.length > 0, zones.length + ' zones')
 
@@ -13,6 +14,13 @@ test('has zones', function (t) {
     t.ok(typeof zone.offset === 'number', 'has number offset')
     t.ok(typeof zone.abbreviation === 'string', 'has string abbreviation')
     t.ok(typeof zone.daylightSavingsTime === 'boolean', 'has boolean daylight savings time')
+
+    if (previous) {
+      t.ok(previous.offset <= zone.offset, 'has increasing offset')
+      t.ok(previous.offset !== zone.offset || previous.name <= zone.name, 'has increasing name when equal offset')
+    }
+
+    previous = zone
   })
 
   t.end()

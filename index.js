@@ -30,7 +30,11 @@ module.exports = function (date, options) {
 
   if (options.sort !== false) {
     result.sort(function (a, b) {
-      return a.offset - b.offset
+      var d = a.offset - b.offset
+      if (d) return d
+      if (a.name < b.name) return -1
+      if (a.name > b.name) return 1
+      return 0
     })
   }
 
