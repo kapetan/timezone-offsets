@@ -1,6 +1,6 @@
 {
   "name": "timezone-offsets",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Timezone list with adjusted time offset",
   "main": "index.js",
   "scripts": {
