@@ -1,32 +1,38 @@
 var timezones = require('./timezones')
 
-module.exports = function (date, options) {
+var getTime = function (date) {
+  if (date == null) date = Date.now()
+  if (date instanceof Date) date = date.getTime()
+  date = date / 1000
+  return date
+}
+
+var getZone = function (date, zone) {
+  for (var i = zone.timestamps.length - 1; i >= 0; i--) {
+    var ts = zone.timestamps[i]
+
+    if (ts <= date || i === 0) {
+      return {
+        name: zone.name,
+        countryCode: zone.countryCode,
+        offset: zone.offsets[i] * 1000,
+        abbreviation: zone.abbreviations[i],
+        daylightSavingsTime: zone.daylightSavingsTime[i]
+      }
+    }
+  }
+}
+
+module.exports = exports = function (date, options) {
   if (!options && (typeof date === 'object') && !(date instanceof Date)) {
     options = date
     date = null
   }
 
-  if (date == null) date = Date.now()
-  if (date instanceof Date) date = date.getTime()
   if (!options) options = {}
+  date = getTime(date)
 
-  date = date / 1000
-
-  var result = timezones.map(function (zone) {
-    for (var i = zone.timestamps.length - 1; i >= 0; i--) {
-      var ts = zone.timestamps[i]
-
-      if (ts <= date || i === 0) {
-        return {
-          name: zone.name,
-          countryCode: zone.countryCode,
-          offset: zone.offsets[i] * 1000,
-          abbreviation: zone.abbreviations[i],
-          daylightSavingsTime: zone.daylightSavingsTime[i]
-        }
-      }
-    }
-  })
+  var result = timezones.map(getZone.bind(null, date))
 
   if (options.sort !== false) {
     result.sort(function (a, b) {
@@ -39,4 +45,18 @@ module.exports = function (date, options) {
   }
 
   return result
+}
+
+exports.find = function (date, name) {
+  if (!name) {
+    name = date
+    date = null
+  }
+
+  date = getTime(date)
+
+  for (var i = 0; i < timezones.length; i++) {
+    var zone = timezones[i]
+    if (zone.name === name) return getZone(date, zone)
+  }
 }

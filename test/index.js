@@ -25,3 +25,15 @@ test('has zones', function (t) {
 
   t.end()
 })
+
+test('find', function (t) {
+  var zone = tz.find('Europe/Copenhagen')
+
+  t.equals(zone.name, 'Europe/Copenhagen')
+  t.equals(zone.countryCode, 'DK')
+  t.ok(typeof zone.offset === 'number', 'has number offset')
+  t.ok(typeof zone.abbreviation === 'string', 'has string abbreviation')
+  t.ok(typeof zone.daylightSavingsTime === 'boolean', 'has boolean daylight savings time')
+
+  t.end()
+})
